@@ -1,9 +1,10 @@
 import sys
 from typing import Dict, List
 from room import Room
+from player import Player
+RoomDict = Dict[str, Room]
 
-# Declare all the rooms
-room: Dict[str, Room] = {
+room: RoomDict = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -22,11 +23,13 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+HELP_PROPMT = "Type 'help' for a list of commands"
+
 def foo():
     pass
 
 def print_help():
-    help_message = f"""To move in a cardinal direction type n, s, e or w
+    help_message = """To move in a cardinal direction type n, s, e or w
 To pick up an item type 'get' or 'take' and then the name of the item"""
     print(help_message)
 
@@ -40,10 +43,6 @@ commands = {
     'help': print_help,
 }
 
-help_prompt = "Type 'help' for a list of commands"
-
-# Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -53,6 +52,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+player = Player('Patrick', room['outside'])
+player.move_to('s')
 
 if __name__ == "__main__":
     raw_input: str
@@ -68,10 +69,10 @@ if __name__ == "__main__":
                     commands[args[0].lower()](args[1])
             except KeyError as error:
                 print(f"{error} is not a valid command")
-                print(help_prompt)
+                print(HELP_PROPMT)
             except TypeError:
                 print("I don't understand your command")
-                print(help_prompt)
+                print(HELP_PROPMT)
     except KeyboardInterrupt:
         print()
         print('Thank you for playing')
