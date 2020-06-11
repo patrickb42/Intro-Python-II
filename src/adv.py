@@ -1,8 +1,9 @@
+import sys
+from typing import Dict, List
 from room import Room
 
 # Declare all the rooms
-
-room = {
+room: Dict[str, Room] = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
@@ -21,6 +22,25 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+def foo():
+    pass
+
+def print_help():
+    help_message = f"""To move in a cardinal direction type n, s, e or w
+To pick up an item type 'get' or 'take' and then the name of the item"""
+    print(help_message)
+
+commands = {
+    'n': foo,
+    's': foo,
+    'e': foo,
+    'w': foo,
+    'take': foo,
+    'get': foo,
+    'help': print_help,
+}
+
+help_prompt = "Type 'help' for a list of commands"
 
 # Link rooms together
 
@@ -33,9 +53,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
+
+if __name__ == "__main__":
+    raw_input: str
+    args: List[str]
+    try:
+        while True:
+            raw_input = input('$> ')
+            args = raw_input.split(' ')
+            try:
+                if len(args) == 1:
+                    commands[args[0].lower()]()
+                else:
+                    commands[args[0].lower()](args[1])
+            except KeyError as error:
+                print(f"{error} is not a valid command")
+                print(help_prompt)
+            except TypeError:
+                print("I don't understand your command")
+                print(help_prompt)
+    except KeyboardInterrupt:
+        print()
+        print('Thank you for playing')
 
 # Make a new player object that is currently in the 'outside' room.
 
