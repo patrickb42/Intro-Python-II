@@ -15,3 +15,6 @@ class Controller:
             Controller.__subject.move_to(direction)
 
         return mover
+
+    def take_item(self, item: str):
+        Controller.__subject.take(item)

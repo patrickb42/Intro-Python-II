@@ -26,9 +26,6 @@ earlier adventurers. The only exit is to the south."""),
 
 HELP_PROPMT = "Type 'help' for a list of commands"
 
-def foo():
-    pass
-
 def print_help():
     help_message = """To move in a cardinal direction type n, s, e or w
 To pick up an item type 'get' or 'take' and then the name of the item"""
@@ -41,8 +38,8 @@ commands = {
     's': controller.make_subject_mover('s'),
     'e': controller.make_subject_mover('e'),
     'w': controller.make_subject_mover('w'),
-    'take': foo,
-    'get': foo,
+    'take': controller.take_item,
+    'get': controller.take_item,
     'help': print_help,
 }
 
