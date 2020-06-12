@@ -21,3 +21,10 @@ class Room:
     def description(self):
         '''returns description'''
         return self.__description
+
+    def __str__(self):
+        return f"""Room: {self.name}
+{self.description}"""
+
+    def __repr__(self):
+        return f"Room(name='{self.name}', description='{self.description}'"

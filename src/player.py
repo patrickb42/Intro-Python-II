@@ -7,7 +7,7 @@ class Player:
         self.__current_room = current_room
 
     @property
-    def current_room(self):
+    def current_room(self) -> Room:
         return self.__current_room
 
     @current_room.setter
@@ -18,16 +18,17 @@ class Player:
         or self.__current_room.w_to is new_room:
             self.__current_room = new_room
         else:
-            raise Exception(f'room {new_room} is not connected to the current room {self.__current_room}')
+            raise Exception(f'room {repr(new_room)} is not connected \
+to the current room {repr(self.__current_room)}')
 
-    def move_to(self, direction: str, print_room = True):
+    def move_to(self, direction: str, print_room=True):
         new_room: Room = getattr(self.current_room, f'{direction}_to')
-        if new_room == None:
+        if new_room is None:
             print("There's no room in that direction")
             return False
         else:
             self.current_room = new_room
             if print_room:
-                print(f'Room: {new_room.name}')
-                print(new_room.description)
+                print()
+                print(self.current_room)
             return True

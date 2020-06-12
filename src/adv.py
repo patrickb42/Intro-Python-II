@@ -52,27 +52,28 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-player = Player('Patrick', room['outside'])
-player.move_to('s')
+def run_repl():
+    while True:
+        raw_input: str = input('$> ')
+        args: List[str] = raw_input.split(' ')
+        try:
+            if len(args) == 1:
+                commands[args[0].lower()]()
+            else:
+                commands[args[0].lower()](args[1])
+        except KeyError as error:
+            print(f"{error} is not a valid command")
+            print(HELP_PROPMT)
+        except TypeError:
+            print("I don't understand your command")
+            print(HELP_PROPMT)
 
 if __name__ == "__main__":
-    raw_input: str
-    args: List[str]
+    staring_room = room['outside']
+    player = Player('Patrick', room['outside'])
+    print(staring_room)
     try:
-        while True:
-            raw_input = input('$> ')
-            args = raw_input.split(' ')
-            try:
-                if len(args) == 1:
-                    commands[args[0].lower()]()
-                else:
-                    commands[args[0].lower()](args[1])
-            except KeyError as error:
-                print(f"{error} is not a valid command")
-                print(HELP_PROPMT)
-            except TypeError:
-                print("I don't understand your command")
-                print(HELP_PROPMT)
+        run_repl()
     except KeyboardInterrupt:
         print()
         print('Thank you for playing')
