@@ -5,6 +5,10 @@ class Player:
     def __init__(self, name: str, current_room: Room):
         self.__name = name
         self.__current_room = current_room
+    
+    @property
+    def name(self):
+        return self.__name
 
     @property
     def current_room(self) -> Room:

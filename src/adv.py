@@ -1,5 +1,6 @@
 import sys
 from typing import Dict, List
+from controller import Controller
 from room import Room
 from player import Player
 RoomDict = Dict[str, Room]
@@ -33,11 +34,13 @@ def print_help():
 To pick up an item type 'get' or 'take' and then the name of the item"""
     print(help_message)
 
+controller = Controller()
+
 commands = {
-    'n': foo,
-    's': foo,
-    'e': foo,
-    'w': foo,
+    'n': controller.make_subject_mover('n'),
+    's': controller.make_subject_mover('s'),
+    'e': controller.make_subject_mover('e'),
+    'w': controller.make_subject_mover('w'),
     'take': foo,
     'get': foo,
     'help': print_help,
@@ -71,6 +74,7 @@ def run_repl():
 if __name__ == "__main__":
     staring_room = room['outside']
     player = Player('Patrick', room['outside'])
+    controller.subject = player
     print(staring_room)
     try:
         run_repl()
