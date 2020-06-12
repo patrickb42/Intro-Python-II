@@ -8,16 +8,16 @@ RoomDict = Dict[str, Room]
 room: RoomDict = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons",
-                     ['i1', 'i2', 'i3']),
+                     {'i1': 1, 'i2': 2, 'i3': 3}),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""",
-['i4', 'i5']),
+{'i4': 4, 'i5': 5}),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""",
-['i6']),
+{'i6': 6}),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
@@ -63,7 +63,7 @@ def run_repl():
             if len(args) == 1:
                 commands[args[0].lower()]()
             else:
-                commands[args[0].lower()](args[1])
+                commands[args[0].lower()](args[1].lower())
         except KeyError as error:
             print(f"{error} is not a valid command")
             print(HELP_PROPMT)

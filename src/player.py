@@ -1,16 +1,18 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
-from pyrsistent import pvector, typing
+from pyrsistent import pmap, typing
 from typing import List
 from room import Room
 from item import Item
+from item_holder import take_item, drop_item
 
 class Player:
     def __init__(self, name: str, current_room: Room, items=None):
         self.__name = name
         self.__current_room = current_room
-        # self.__items: List[Item] = items if items is not None else []
-        self.__items = pvector(items) if items is not None else pvector()
+        self.__items = pmap(items) if items is not None else pmap({})
+        self.take_item = take_item(self)
+        self.drop_item = drop_item(self)
 
     @property
     def name(self):
@@ -49,17 +51,3 @@ to the current room {repr(self.__current_room)}')
     @items.setter
     def items(self, items):
         self.__items = items
-
-    # not sure if I should make item source a string or Item object
-    def take_item(self, item: str, src=None):
-        if src is not None:
-            try:
-                src.drop_item(item)
-            except Exception:
-                print(f'error dropping having src {src} drop item {item}')
-        self.items = self.items.append(item)
-
-    def drop_item(self, item, dest=None):
-        self.items = self.items.delete(item)
-        if dest is not None:
-            dest.take_item(item)

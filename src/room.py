@@ -1,15 +1,18 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
-from pyrsistent import pvector
+from pyrsistent import pmap
+from item_holder import take_item, drop_item
 class Room:
     def __init__(self, name: str, description: str, items=None):
         self.__name = name
         self.__description = description
-        self.items = pvector(items if items is not None else [])
+        self.items = pmap(items if items is not None else pmap({}))
         self.n_to: 'Room' = None
         self.s_to: 'Room' = None
         self.e_to: 'Room' = None
         self.w_to: 'Room' = None
+        self.take_item = take_item(self)
+        self.drop_item = drop_item(self)
 
     @property
     def name(self):

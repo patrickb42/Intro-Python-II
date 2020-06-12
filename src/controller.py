@@ -1,3 +1,5 @@
+import sys
+
 class Controller:
     __subject = None
     def __init__(self):
@@ -17,4 +19,8 @@ class Controller:
         return mover
 
     def take_item(self, item: str):
-        Controller.__subject.take(item)
+        try:
+            Controller.__subject.take_item(item, Controller.__subject.current_room) # hacky way to do this
+        except Exception:
+            print(dir(Exception))
+            print(dir(sys.exc_info()[0]))
